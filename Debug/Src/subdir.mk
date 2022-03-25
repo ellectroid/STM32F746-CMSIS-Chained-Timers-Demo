@@ -5,8 +5,10 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../Src/advtmr.c \
 ../Src/bsctmr.c \
 ../Src/gpio.c \
+../Src/gptmr.c \
 ../Src/main.c \
 ../Src/rcc.c \
 ../Src/syscalls.c \
@@ -14,8 +16,10 @@ C_SRCS += \
 ../Src/systick.c 
 
 OBJS += \
+./Src/advtmr.o \
 ./Src/bsctmr.o \
 ./Src/gpio.o \
+./Src/gptmr.o \
 ./Src/main.o \
 ./Src/rcc.o \
 ./Src/syscalls.o \
@@ -23,8 +27,10 @@ OBJS += \
 ./Src/systick.o 
 
 C_DEPS += \
+./Src/advtmr.d \
 ./Src/bsctmr.d \
 ./Src/gpio.d \
+./Src/gptmr.d \
 ./Src/main.d \
 ./Src/rcc.d \
 ./Src/syscalls.d \
@@ -39,7 +45,7 @@ Src/%.o: ../Src/%.c Src/subdir.mk
 clean: clean-Src
 
 clean-Src:
-	-$(RM) ./Src/bsctmr.d ./Src/bsctmr.o ./Src/gpio.d ./Src/gpio.o ./Src/main.d ./Src/main.o ./Src/rcc.d ./Src/rcc.o ./Src/syscalls.d ./Src/syscalls.o ./Src/sysmem.d ./Src/sysmem.o ./Src/systick.d ./Src/systick.o
+	-$(RM) ./Src/advtmr.d ./Src/advtmr.o ./Src/bsctmr.d ./Src/bsctmr.o ./Src/gpio.d ./Src/gpio.o ./Src/gptmr.d ./Src/gptmr.o ./Src/main.d ./Src/main.o ./Src/rcc.d ./Src/rcc.o ./Src/syscalls.d ./Src/syscalls.o ./Src/sysmem.d ./Src/sysmem.o ./Src/systick.d ./Src/systick.o
 
 .PHONY: clean-Src
 

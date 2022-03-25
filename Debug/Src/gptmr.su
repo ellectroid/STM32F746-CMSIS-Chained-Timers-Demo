@@ -1,0 +1,3 @@
+gptmr.c:3:6:general_purpose_timer_setup_slave1	16	static
+gptmr.c:61:6:general_purpose_timer_setup_slave2	16	static
+gptmr.c:120:6:general_purpose_timer_setup_slave3	16	static

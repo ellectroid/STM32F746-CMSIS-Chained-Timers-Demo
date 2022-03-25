@@ -19,6 +19,6 @@ uint32_t millis(void){
 }
 
 void system_msdelay(uint32_t delay_ms){
-	uint32_t end = millis() + delay_ms;
-	while(millis()!=end); //not <, because overflow
+	uint32_t end = millis() + delay_ms;  //will overflow eventually
+	while(millis()!=end); //not < in case of overflow
 }

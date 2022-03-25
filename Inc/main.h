@@ -7,6 +7,7 @@
 #include "gpio.h"
 #include "systick.h"
 #include "bsctmr.h"
-
+#include "advtmr.h"
+#include "gptmr.h"
 
 #endif /* MAIN_H_ */

@@ -3,8 +3,12 @@
 /*
  * Private functions
  */
+void rcc_gptimer12(void);
+void rcc_gptimer5(void);
+void rcc_gptimer3(void);
 void rcc_usart1(void);
 void rcc_bsctmr6(void);
+void rcc_advtmr1(void);
 void rcc_dma1(void);
 void rcc_dma2(void);
 void rcc_gpio_porta(void);
@@ -14,32 +18,44 @@ void rcc_init(void);
 
 void rcc_setup(void) {
 	rcc_init();
-	rcc_usart1();
+	//rcc_usart1();
 	rcc_gpio_porta();
 	rcc_gpio_portb();
 	rcc_gpio_porti();
-	rcc_dma2();
+	//rcc_dma2();
 	rcc_bsctmr6();
+	rcc_advtmr1();
+	rcc_gptimer3();
+	rcc_gptimer5();
+	rcc_gptimer12();
 }
 
+void rcc_gptimer12(void){
+	RCC->APB1ENR |= RCC_APB1ENR_TIM12EN; //enable clock for general purpose timer 12
+}
+void rcc_gptimer5(void){
+	RCC->APB1ENR |= RCC_APB1ENR_TIM5EN; //enable clock for general purpose timer 5
+}
+void rcc_gptimer3(void){
+	RCC->APB1ENR |= RCC_APB1ENR_TIM3EN; //enable clock for general purpose timer 3
+}
+void rcc_advtmr1(void){
+	RCC->APB2ENR |= RCC_APB2ENR_TIM1EN; //enable clock for advanced timer 1
+}
 void rcc_bsctmr6(void){
 	RCC->APB1ENR |= RCC_APB1ENR_TIM6EN; //enable clock for basic timer 6
 }
-
 void rcc_usart1(void) {
 	RCC->DCKCFGR2 &= ~RCC_DCKCFGR2_USART1SEL; //reset USART1 clock source bits
 	RCC->DCKCFGR2 |= RCC_DCKCFGR2_USART1SEL_0; //USART1 clock is system clock
 	RCC->APB2ENR |= RCC_APB2ENR_USART1EN; //enable clock for USART1 peripheral
 }
-
 void rcc_gpio_porta(void) {
 	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN; //enable clock for GPIO port A
 }
-
 void rcc_gpio_portb(void) {
 	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN; //enable clock for GPIO port B
 }
-
 void rcc_gpio_porti(void) {
 	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOIEN; //enable clock for GPIO port I
 }
@@ -63,10 +79,10 @@ void rcc_init(void) {
 
 	PWR->CR1 |= PWR_CR1_VOS; //explicit default value for internal voltage regulator
 	(void) temp; //waste cycles until activated
-	PWR->CR1 |= PWR_CR1_ODEN;
+	PWR->CR1 |= PWR_CR1_ODEN; //overdrive enable
 	while (!(PWR->CSR1 & PWR_CSR1_ODRDY)); //wait while overdrive gets ready
 	PWR->CR1 |= PWR_CR1_ODSWEN; //enable overdrive switching
-	while (!(PWR->CSR1 & PWR_CSR1_ODSWRDY)); //wait while overdrive gets ready
+	while (!(PWR->CSR1 & PWR_CSR1_ODSWRDY)); //wait while overdrive switching gets ready
 
 	//configure PLL
 
@@ -77,12 +93,13 @@ void rcc_init(void) {
 	RCC->PLLCFGR |= (0x1B0 << RCC_PLLCFGR_PLLN_Pos); //PLLN 432
 	RCC->PLLCFGR &= ~RCC_PLLCFGR_PLLP; //PLLP 2
 
-	//RCC->PLLCFGR = 0x29406C19;
+	//RCC->PLLCFGR = 0x29406C19; //same value hardcoded
 
 	RCC->CR |= RCC_CR_PLLON; //Enable PLL
 	while (!(RCC->CR & RCC_CR_PLLRDY)); //wait while hardware signals PLL is OK
 
 	FLASH->ACR |= 7U; //Set Flash wait states higher before pumping the clock up (8 clock cycles)
+	// otherwise the flash can't serve instructions quickly enough for that CPU clock
 
 	//configure AHB/APB clocks
 	RCC->CFGR &= ~RCC_CFGR_HPRE_DIV1; //AHB Prescaler 1

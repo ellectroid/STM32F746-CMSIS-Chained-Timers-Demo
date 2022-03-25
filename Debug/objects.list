@@ -1,5 +1,7 @@
+"./Src/advtmr.o"
 "./Src/bsctmr.o"
 "./Src/gpio.o"
+"./Src/gptmr.o"
 "./Src/main.o"
 "./Src/rcc.o"
 "./Src/syscalls.o"

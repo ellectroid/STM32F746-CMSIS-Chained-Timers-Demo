@@ -1,8 +1,10 @@
-# STM32F746-RCC-Max-Freq-SysTick-Basic-Timer-Demo
-Basic demo of setting up max overdrive freuency for MCU, using SysTick to make delay, using basic timer with interrupts
+# STM32F746-Chained-Timers-Demo
+Demonstration of chaining 4 times, that activate one another in different ways.
 
 Clock: 216MHz; 25MHz external oscillator with PLL.<br>
-LED on PI1.<br><br>
+LED on PI1.<br>
+PB4, PI0 and PB15 (Disco board's ARD D3, D5, D11 respectively)
+<br><br>
 
 
 This project is a proof of concept (that I can).

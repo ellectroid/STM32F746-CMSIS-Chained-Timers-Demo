@@ -1,0 +1,5 @@
+core_cm7.h:1896:22:__NVIC_EnableIRQ	16	static
+core_cm7.h:1985:22:__NVIC_ClearPendingIRQ	16	static
+core_cm7.h:2024:22:__NVIC_SetPriority	16	static
+advtmr.c:3:6:advanced_timer_setup_master	16	static
+advtmr.c:40:6:TIM1_UP_TIM10_IRQHandler	8	static
